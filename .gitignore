@@ -1,0 +1,33 @@
+# Weights / artifacts (do not track large model files)
+original_model/
+quantized/
+quantized-*/
+*.safetensors
+*.bin
+*.gguf
+*.pt
+*.pth
+model-*.safetensors
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.venv_/
+venv/
+*.egg-info/
+
+# Hugging Face
+hf-repo-id/
+.cache/
+
+# Tokens / secrets
+.env
+*.token
+HF_TOKEN
+
+# Editor / OS
+.DS_Store
+*.swp
+.idea/
+.vscode/
