@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" font-family="Georgia, 'Times New Roman', serif">
+<rect width="1200" height="520" fill="#ffffff"/>
+<text x="40" y="40" font-size="22" font-weight="bold">Fig. 2 — Rate–distortion of PLE codec candidates (synthetic 512×160)</text>
+<text x="40" y="62" font-size="13" font-style="italic">그림 2 — PLE 코덱 후보의 용량–왜곡 비교. 우하향이 좋음. ■ = 채택(affine_uint4_g32).</text>
+<g font-size="12">
+<line x1="140" y1="120" x2="140" y2="440" stroke="#000" stroke-width="2"/>
+<line x1="140" y1="440" x2="1140" y2="440" stroke="#000" stroke-width="2"/>
+<text x="600" y="475" text-anchor="middle" font-size="14">bytes per element (storage cost →)</text>
+<text x="30" y="280" text-anchor="middle" font-size="14" transform="rotate(-90 30 280)">relative L2 error (distortion →)</text>
+<text x="140" y="458" text-anchor="middle">0.5</text>
+<text x="440" y="458" text-anchor="middle">1.0</text>
+<text x="740" y="458" text-anchor="middle">1.5</text>
+<text x="1040" y="458" text-anchor="middle">2.0</text>
+<text x="126" y="444" text-anchor="end">0.00</text>
+<text x="126" y="364" text-anchor="end">0.02</text>
+<text x="126" y="284" text-anchor="end">0.04</text>
+<text x="126" y="204" text-anchor="end">0.06</text>
+<text x="126" y="124" text-anchor="end">0.08</text>
+<g stroke="#999" stroke-width="1" stroke-dasharray="4,4">
+<line x1="140" y1="360" x2="1140" y2="360"/><line x1="140" y1="280" x2="1140" y2="280"/>
+<line x1="140" y1="200" x2="1140" y2="200"/><line x1="140" y1="120" x2="1140" y2="120"/>
+</g>
+</g>
+<g font-size="12">
+<!-- x = 140 + (bpe-0.5)*666.7 ; y = 440 - rel*4000 -->
+<!-- bf16 (2.0, 0.001651) --><circle cx="1140" cy="433" r="6" fill="#fff" stroke="#000" stroke-width="2"/><text x="1140" y="418" text-anchor="middle">bf16</text>
+<!-- fp8 (1.012, 0.02687) --><circle cx="481" cy="333" r="6" fill="#fff" stroke="#000" stroke-width="2"/><text x="481" y="318" text-anchor="middle">fp8_row</text>
+<!-- sym_int4 (0.512, 0.07561) --><circle cx="148" cy="138" r="5" fill="#000"/><text x="148" y="160" text-anchor="middle">sym_int4</text>
+<!-- sym_int4_g32 (0.562, 0.06619) --><circle cx="181" cy="175" r="5" fill="#000"/><text x="235" y="178" text-anchor="start">sym_int4_g32</text>
+<!-- affine_uint4 (0.525, 0.03872) --><circle cx="157" cy="285" r="5" fill="#fff" stroke="#000" stroke-width="2"/><text x="157" y="307" text-anchor="middle">affine_u4</text>
+<!-- affine mse (0.525, 0.07829) --><circle cx="157" cy="127" r="5" fill="#000"/><text x="100" y="120" text-anchor="end">affine_mse</text>
+<!-- adopted affine_g32 (0.625, 0.0302) --><rect x="213" y="311" width="14" height="14" fill="#000"/><text x="235" y="323" text-anchor="start" font-weight="bold">affine_uint4_g32 (adopted)</text>
+</g>
+<g font-size="13">
+<rect x="140" y="60" width="1000" height="1" fill="#000"/>
+<text x="40" y="500" font-size="12">Method: .venv/bin/python -m quantization.ple_codecs · Source: docs/evidence/ple_codecs_selftest.txt · 7 codecs, rel_l2 &lt; 0.2 gate.</text>
+</g>
+</svg>

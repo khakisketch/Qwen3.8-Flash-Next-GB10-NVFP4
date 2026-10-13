@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="420" font-family="Georgia, 'Times New Roman', serif">
+<defs>
+<marker id="arr3" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+<path d="M0,0 L8,3 L0,6" fill="none" stroke="#000" stroke-width="1.5"/>
+</marker>
+</defs>
+<rect width="1200" height="420" fill="#fff"/>
+<text x="40" y="40" font-size="22" font-weight="bold">Fig. 3 — Pipeline with verification gates (download → quantize → verify → serve)</text>
+<text x="40" y="62" font-size="13" font-style="italic">그림 3 — 검증 게이트가 포함된 파이프라인. 각 게이트는 통과 기준과 재현 명령을 가진다.</text>
+<g font-size="13" text-anchor="middle">
+<rect x="40" y="110" width="200" height="90" fill="none" stroke="#000" stroke-width="2"/>
+<text x="140" y="140" font-weight="bold">S1. Download</text>
+<text x="140" y="162">hf download, resume</text>
+<text x="140" y="182">pinned revision</text>
+<rect x="270" y="110" width="170" height="90" fill="none" stroke="#000" stroke-width="2"/>
+<text x="355" y="140" font-weight="bold">G1. Inventory</text>
+<text x="355" y="162">header-only scan</text>
+<text x="355" y="182">category budget</text>
+<rect x="470" y="110" width="200" height="90" fill="none" stroke="#000" stroke-width="2"/>
+<text x="570" y="140" font-weight="bold">S2. Quantize</text>
+<text x="570" y="162">streaming, 1 shard</text>
+<text x="570" y="182">NVFP4 + INT4</text>
+<rect x="700" y="110" width="170" height="90" fill="none" stroke="#000" stroke-width="2"/>
+<text x="785" y="140" font-weight="bold">G2. Round-trip</text>
+<text x="785" y="162">rel_l2 &lt; 0.2</text>
+<text x="785" y="182">synthetic 2-shard</text>
+<rect x="900" y="110" width="260" height="90" fill="none" stroke="#000" stroke-width="2"/>
+<text x="1030" y="140" font-weight="bold">S3. Serve</text>
+<text x="1030" y="162">vLLM / SGLang, TP = 1</text>
+<text x="1030" y="182">PLE via NVMe + LRU</text>
+</g>
+<g stroke="#000" stroke-width="1.8" marker-end="url(#arr3)">
+<line x1="240" y1="155" x2="268" y2="155"/><line x1="440" y1="155" x2="468" y2="155"/>
+<line x1="670" y1="155" x2="698" y2="155"/><line x1="870" y1="155" x2="898" y2="155"/>
+</g>
+<g font-size="13">
+<rect x="40" y="240" width="1120" height="150" fill="none" stroke="#000"/>
+<text x="56" y="266" font-weight="bold">Gate criteria and reproduction (all measured on GB10, 2026-10-13)</text>
+<text x="56" y="292" font-family="monospace" font-size="12">G1  tools/manifest_inventory.py ............ category params/bytes, no weight download</text>
+<text x="56" y="316" font-family="monospace" font-size="12">G2  python -m quantization.streaming_convert --synthetic-test ... PLE 0.030 / experts 0.094</text>
+<text x="56" y="340" font-family="monospace" font-size="12">G3  python tools/gb10_doctor.py --skip-docker ................ arch_ok, gb10_detected, 127.6 GB</text>
+<text x="56" y="364" font-family="monospace" font-size="12">G4  scripts/accuracy_baseline.py ........... BF16 reference, human-judged parity (pending full run)</text>
+</g>
+</svg>

@@ -60,6 +60,7 @@ bash deploy/serve_sglang.sh
 ## 연구일지처럼 읽기
 
 정리본: [`docs/research-log.md`](docs/research-log.md) — Day 1~5 (인벤토리 → 코덱 선정 → 스트리밍 변환 → PLE 런타임 → GB10 실측)
+논문용 흑백본: [`docs/paper-figures.md`](docs/paper-figures.md) — Figure 1~4 (인쇄·보고서용, 한/영 캡션)
 
 ```mermaid
 flowchart LR

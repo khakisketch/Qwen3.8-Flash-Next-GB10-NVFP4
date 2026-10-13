@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="400" font-family="Georgia, 'Times New Roman', serif">
+<defs>
+<pattern id="hb1" width="9" height="9" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+<rect width="9" height="9" fill="#fff"/><line x1="0" y1="0" x2="0" y2="9" stroke="#000" stroke-width="2"/>
+</pattern>
+<pattern id="hb2" width="9" height="9" patternTransform="rotate(-45)" patternUnits="userSpaceOnUse">
+<rect width="9" height="9" fill="#fff"/><line x1="0" y1="0" x2="0" y2="9" stroke="#000" stroke-width="2"/>
+</pattern>
+<pattern id="hb3" width="7" height="7" patternUnits="userSpaceOnUse">
+<rect width="7" height="7" fill="#fff"/><circle cx="3.5" cy="3.5" r="1.4" fill="#000"/>
+</pattern>
+</defs>
+<rect width="1200" height="400" fill="#fff"/>
+<text x="40" y="40" font-size="22" font-weight="bold">Fig. 4 — Memory budget: BF16 source vs. quantized deployment (bytes/param policy)</text>
+<text x="40" y="62" font-size="13" font-style="italic">그림 4 — 메모리 예산. 정책 기반 추정치이며 코덱 실측 오차는 Fig. 2 참조.</text>
+<g font-size="14">
+<text x="40" y="130">BF16 source (≈ 360 GB ref.)</text>
+<rect x="330" y="108" width="700" height="30" fill="#000"/>
+<text x="1050" y="130">2.0 B/p</text>
+<text x="40" y="190">MoE experts (NVFP4)</text>
+<rect x="330" y="168" width="175" height="30" fill="url(#hb1)" stroke="#000" stroke-width="1.5"/>
+<text x="520" y="190">0.5 B/p · rel ≈ 0.09</text>
+<text x="40" y="250">PLE table (INT4 g32)</text>
+<rect x="330" y="228" width="219" height="30" fill="url(#hb2)" stroke="#000" stroke-width="1.5"/>
+<text x="564" y="250">0.625 B/p · rel ≈ 0.03</text>
+<text x="40" y="310">Sensitive (BF16 kept)</text>
+<rect x="330" y="288" width="140" height="30" fill="url(#hb3)" stroke="#000" stroke-width="1.5"/>
+<text x="485" y="310">2.0 B/p</text>
+</g>
+<g font-size="12">
+<line x1="330" y1="90" x2="330" y2="340" stroke="#000"/>
+<line x1="330" y1="340" x2="1030" y2="340" stroke="#000" stroke-width="1.5"/>
+<text x="330" y="360">0</text><text x="680" y="360">≈ 180 GB</text><text x="1030" y="360">≈ 360 GB</text>
+<line x1="543" y1="90" x2="543" y2="340" stroke="#000" stroke-dasharray="5,4"/>
+<text x="543" y="360">128 GB (GB10 unified)</text>
+</g>
+<text x="40" y="388" font-size="12">Note: bar lengths encode the per-category bytes/param policy (configs/nvfp4_gb10.yaml); totals are estimates. PLE cold tier on NVMe keeps residency within budget.</text>
+</svg>

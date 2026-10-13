@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="460" font-family="Georgia, 'Times New Roman', serif">
+<defs>
+<pattern id="hatch" width="8" height="8" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+<rect width="8" height="8" fill="#ffffff"/><line x1="0" y1="0" x2="0" y2="8" stroke="#000000" stroke-width="1.5"/>
+</pattern>
+<pattern id="dots" width="10" height="10" patternUnits="userSpaceOnUse">
+<rect width="10" height="10" fill="#ffffff"/><circle cx="5" cy="5" r="1.6" fill="#000000"/>
+</pattern>
+<pattern id="gray" width="8" height="8" patternUnits="userSpaceOnUse">
+<rect width="8" height="8" fill="#d9d9d9"/>
+</pattern>
+<marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+<path d="M0,0 L8,3 L0,6" fill="none" stroke="#000000" stroke-width="1.5"/>
+</marker>
+</defs>
+<rect width="1200" height="460" fill="#ffffff"/>
+<text x="40" y="40" font-size="22" font-weight="bold" fill="#000">Fig. 1 — System overview (GB10 single-node quantization and serving)</text>
+<text x="40" y="62" font-size="13" font-style="italic" fill="#333">그림 1 — GB10 단일머신 양자화·서빙 전체 구성. 인쇄용 흑백본.</text>
+<g font-size="14">
+<rect x="40" y="100" width="300" height="200" fill="none" stroke="#000" stroke-width="2"/>
+<text x="60" y="128" font-weight="bold">A. Source (BF16)</text>
+<text x="60" y="154">125B MoE body, 48 layers</text>
+<text x="60" y="178">51B PLE n-gram table</text>
+<text x="60" y="202">MTP 1 layer, vision 27 layers</text>
+<text x="60" y="226">≈ 360 GB, 262K context</text>
+<text x="60" y="256" font-size="12" font-style="italic">Qwen/Qwen3.8-Flash-Next</text>
+<rect x="400" y="100" width="340" height="200" fill="url(#hatch)" stroke="#000" stroke-width="2"/>
+<text x="420" y="128" font-weight="bold">B. Streaming converter</text>
+<text x="420" y="154">MoE → NVFP4 E2M1 (blk 16)</text>
+<text x="420" y="178">PLE → affine UINT4 g32</text>
+<text x="420" y="202">sensitive → BF16 retained</text>
+<text x="420" y="226">one shard resident at a time</text>
+<text x="420" y="256" font-size="12" font-style="italic">quantization/streaming_convert.py</text>
+<rect x="800" y="100" width="360" height="200" fill="none" stroke="#000" stroke-width="2"/>
+<text x="820" y="128" font-weight="bold">C. GB10 runtime</text>
+<rect x="820" y="142" width="320" height="52" fill="url(#gray)" stroke="#000"/>
+<text x="832" y="164" font-size="13">resident: MoE + sensitive (BF16)</text>
+<text x="832" y="184" font-size="13">vLLM / SGLang, TP = 1</text>
+<rect x="820" y="202" width="320" height="52" fill="url(#dots)" stroke="#000"/>
+<text x="832" y="224" font-size="13">cold tier: PLE on NVMe + LRU</text>
+<text x="832" y="244" font-size="13">runtime/ple_store.py</text>
+<text x="820" y="278" font-size="12" font-style="italic">sm_121 · CUDA 13 · 128 GB unified</text>
+</g>
+<g stroke="#000" stroke-width="1.8" marker-end="url(#arr)">
+<line x1="340" y1="200" x2="398" y2="200"/>
+<line x1="740" y1="200" x2="798" y2="200"/>
+</g>
+<g font-size="13">
+<rect x="40" y="330" width="540" height="100" fill="none" stroke="#000"/>
+<text x="56" y="356" font-weight="bold">Verification (measured, § Evidence)</text>
+<text x="56" y="380">PLE affine-g32 rel_l2 ≈ 0.03 (SNR ≈ 30 dB) · Experts NVFP4 rel_l2 ≈ 0.09–0.10</text>
+<text x="56" y="402">GB10: aarch64, 127.6 GB RAM, torch 2.13, cap 12.1, gb10_detected = true</text>
+<rect x="600" y="330" width="560" height="100" fill="none" stroke="#000"/>
+<text x="616" y="356" font-weight="bold">Artifacts</text>
+<text x="616" y="380">model-*.safetensors · model.safetensors.index.json · config.json</text>
+<text x="616" y="402">ple_int4_manifest.json (row → shard map for NVMe lookup)</text>
+</g>
+</svg>
