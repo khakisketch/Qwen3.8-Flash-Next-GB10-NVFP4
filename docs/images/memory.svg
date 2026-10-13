@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="340" font-family="sans-serif">
+<rect width="1200" height="340" rx="16" fill="#0b1220"/>
+<text x="40" y="44" font-size="22" font-weight="700" fill="#fff">용량 설계 — 왜 단일 GB10에 들어가는가</text>
+<text x="40" y="68" font-size="13" fill="#94a3b8">BF16 기준 약 360GB → 정책 적용 시 약 90~110GB + NVMe PLE 콜드티어 (추정·실측 혼합, 하단 표기 참조)</text>
+<g font-size="13">
+<text x="40" y="110" fill="#94a3b8">BF16 원본</text>
+<rect x="200" y="90" width="600" height="28" rx="6" fill="#334155"/>
+<text x="820" y="110" fill="#e2e8f0">약 360GB (참조)</text>
+<text x="40" y="155" fill="#94a3b8">MoE NVFP4</text>
+<rect x="200" y="135" width="220" height="28" rx="6" fill="#22c55e"/>
+<text x="440" y="155" fill="#e2e8f0">0.5B/param · 실측 rel 0.09</text>
+<text x="40" y="200" fill="#94a3b8">PLE INT4</text>
+<rect x="200" y="180" width="180" height="28" rx="6" fill="#38bdf8"/>
+<text x="400" y="200" fill="#e2e8f0">0.625B/param · 실측 rel 0.03</text>
+<text x="40" y="245" fill="#94a3b8">민감층 BF16</text>
+<rect x="200" y="225" width="140" height="28" rx="6" fill="#f59e0b"/>
+<text x="360" y="245" fill="#e2e8f0">2.0B/param 유지</text>
+<text x="40" y="290" fill="#94a3b8">128GB 라인</text>
+<rect x="200" y="270" width="213" height="6" fill="#ef4444"/>
+<text x="430" y="290" fill="#fca5a5">GB10 통합메모리 128GB — 상주+NVMe 하이브리드로 운용</text>
+</g>
+</svg>

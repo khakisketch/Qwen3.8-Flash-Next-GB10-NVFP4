@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="280" font-family="sans-serif">
+<rect width="1200" height="280" rx="16" fill="#0b1220"/>
+<text x="40" y="44" font-size="22" font-weight="700" fill="#fff">파이프라인 한눈에 보기</text>
+<g font-size="14" text-anchor="middle">
+<g><rect x="40" y="80" width="250" height="130" rx="12" fill="#13233f" stroke="#38bdf8"/><text x="165" y="115" fill="#7dd3fc" font-weight="700">1. 다운로드</text><text x="165" y="140" fill="#e2e8f0">hf download</text><text x="165" y="162" fill="#94a3b8">재개 가능 · 고정 리비전</text><text x="165" y="184" fill="#94a3b8">scripts/download_model.sh</text></g>
+<g><rect x="320" y="80" width="250" height="130" rx="12" fill="#1a2b1f" stroke="#86efac"/><text x="445" y="115" fill="#86efac" font-weight="700">2. 양자화</text><text x="445" y="140" fill="#e2e8f0">NVFP4 + PLE INT4</text><text x="445" y="162" fill="#94a3b8">샤드 스트리밍 변환</text><text x="445" y="184" fill="#94a3b8">configs/nvfp4_gb10.yaml</text></g>
+<g><rect x="600" y="80" width="250" height="130" rx="12" fill="#2a2113" stroke="#fbbf24"/><text x="725" y="115" fill="#fbbf24" font-weight="700">3. 검증</text><text x="725" y="140" fill="#e2e8f0">합성 + 실머신 로그</text><text x="725" y="162" fill="#94a3b8">rel_l2 · SNR · doctor</text><text x="725" y="184" fill="#94a3b8">docs/evidence/</text></g>
+<g><rect x="880" y="80" width="280" height="130" rx="12" fill="#241c3a" stroke="#c4b5fd"/><text x="1020" y="115" fill="#c4b5fd" font-weight="700">4. 배포</text><text x="1020" y="140" fill="#e2e8f0">vLLM / SGLang TP=1</text><text x="1020" y="162" fill="#94a3b8">HF 업로드 → serve</text><text x="1020" y="184" fill="#94a3b8">deploy/</text></g>
+</g>
+<g stroke="#64748b" stroke-width="2">
+<line x1="290" y1="145" x2="318" y2="145"/><line x1="570" y1="145" x2="598" y2="145"/><line x1="850" y1="145" x2="878" y2="145"/>
+</g>
+<text x="40" y="250" font-size="13" fill="#94a3b8">재현 명령은 README 빠른 시작 참조 · 전체 로그는 docs/evidence 에 원본 보관</text>
+</svg>

@@ -1,0 +1,4 @@
+shape [8,128,64] nvfp4_e2m1fn rel_l2=0.1027
+shape [4,160,32] nvfp4_e2m1fn rel_l2=0.0977
+shape [2,96,48] nvfp4_e2m1fn rel_l2=0.1012
+SELF-TEST PASSED

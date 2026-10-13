@@ -1,0 +1,7 @@
+shape [4096,160] sym_int4 rel_l2=0.07495 snr=22.5dB
+shape [4096,160] affine_g32 rel_l2=0.02968 snr=30.6dB
+shape [1000,64] sym_int4 rel_l2=0.06956 snr=23.2dB
+shape [1000,64] affine_g32 rel_l2=0.02957 snr=30.6dB
+shape [7,160] sym_int4 rel_l2=0.07575 snr=22.4dB
+shape [7,160] affine_g32 rel_l2=0.03334 snr=29.5dB
+SELF-TEST PASSED

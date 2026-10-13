@@ -1,0 +1,8 @@
+  bf16               bytes/row_elems=2.000 max_abs=0.000488 rel_l2=0.001651
+  fp8_row            bytes/row_elems=1.012 max_abs=0.008698 rel_l2=0.02687
+  sym_int4           bytes/row_elems=0.512 max_abs=0.01769 rel_l2=0.07561
+  sym_int4_g32       bytes/row_elems=0.562 max_abs=0.01722 rel_l2=0.06619
+  affine_uint4       bytes/row_elems=0.525 max_abs=0.005105 rel_l2=0.03872
+  affine_uint4_mse   bytes/row_elems=0.525 max_abs=0.05377 rel_l2=0.07829
+  affine_uint4_g32   bytes/row_elems=0.625 max_abs=0.004953 rel_l2=0.0302
+SELF-TEST PASSED

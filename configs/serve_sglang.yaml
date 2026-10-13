@@ -1,0 +1,9 @@
+# SGLang 서빙 프리셋 (GB10, TP=1)
+model_path: khakisketch/Qwen3.8-Flash-Next-GB10-NVFP4
+tensor_parallel: 1
+quantization: modelopt_fp4
+context_length: 262144
+host: 0.0.0.0
+port: 30000
+# 실행:
+# python3 -m sglang.launch_server --model-path khakisketch/Qwen3.8-Flash-Next-GB10-NVFP4 --tp 1 --quantization modelopt_fp4

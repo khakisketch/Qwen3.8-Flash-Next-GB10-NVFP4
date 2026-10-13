@@ -1,0 +1,12 @@
+# vLLM 서빙 프리셋 (GB10, TP=1)
+model: khakisketch/Qwen3.8-Flash-Next-GB10-NVFP4
+tensor_parallel: 1
+gpu_memory_utilization: 0.8
+quantization: modelopt_fp4
+max_model_len: 262144
+enforce_eager: false
+trust_remote_code: true
+host: 0.0.0.0
+port: 8000
+# 실행:
+# vllm serve khakisketch/Qwen3.8-Flash-Next-GB10-NVFP4 --tp 1 --gpu-memory-utilization 0.8

@@ -1,0 +1,52 @@
+{
+  "generated_at": "2026-10-13T10:54:42.502288+00:00",
+  "hostname": "aitopatom-332e",
+  "python": "3.12.3",
+  "cpu": {
+    "machine": "aarch64",
+    "arch_ok": true
+  },
+  "gpu": {
+    "present": true,
+    "raw": "NVIDIA GB10, 580.178.04, 12.1, 9A.0B.2D.00.00, 10.38, [N/A], 2405, 3003",
+    "detail": {
+      "name": "NVIDIA GB10",
+      "driver_version": "580.178.04",
+      "compute_cap": "12.1",
+      "vbios": "9A.0B.2D.00.00",
+      "power_draw_w": "10.38",
+      "power_limit_w": "[N/A]",
+      "sm_clk_mhz": "2405",
+      "sm_clk_max_mhz": "3003"
+    },
+    "driver_version": "580.178.04",
+    "cuda_version": "13.0"
+  },
+  "memory": {
+    "free_raw": "\ucd1d\uacc4         \uc0ac\uc6a9        \uc5ec\ubd84      \uacf5\uc720    \ubc84\ud37c/\uce90\uc2dc    \uac00\uc6a9\n\uba54\ubaa8\ub9ac:        121Gi        23Gi        17Gi       647Mi        83Gi        98Gi\n\uc2a4  \uc651:         31Gi       587Mi        31Gi",
+    "mem_total_kb": 127596524,
+    "mem_available_kb": 103420536,
+    "swap_total_kb": 33554424
+  },
+  "storage": {
+    "root_disk": "\ud30c\uc77c \uc2dc\uc2a4\ud15c     \ud06c\uae30  \uc0ac\uc6a9  \uac00\uc6a9 \uc0ac\uc6a9% \ub9c8\uc6b4\ud2b8\uc704\uce58\n/dev/nvme0n1p2  3.7T  533G  3.0T   15% /",
+    "root_bytes": "\ud30c\uc77c \uc2dc\uc2a4\ud15c          1B-\ube14\ub85d          \uac00\uc6a9 \ud615\uc2dd \ub9c8\uc6b4\ud2b8\uc704\uce58\n/dev/nvme0n1p2 4030802149376 3253939548160 ext4 /",
+    "nvme": []
+  },
+  "torch": {
+    "available": true,
+    "torch_version": "2.13.0+cu130",
+    "device_name": "NVIDIA GB10",
+    "capability": [
+      12,
+      1
+    ],
+    "mem_total_gb": 130.7
+  },
+  "summary": {
+    "arch_ok": true,
+    "gb10_detected": true,
+    "ram_gb": 127.6,
+    "docker_gpu_backend": null
+  }
+}

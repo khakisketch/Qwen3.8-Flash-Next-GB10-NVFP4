@@ -45,7 +45,7 @@ echo "..."
 # Login to Hugging Face
 echo "Logging in to Hugging Face..."
 hf login --token "$HF_TOKEN" 2>/dev/null || \
-    python3 -c "from huggingface_hub import login; login(token='$HF_TOKEN')"
+    python3 -c "import os; from huggingface_hub import login; login(token=os.environ['HF_TOKEN'])"
 
 # Create or update repository
 echo "Creating/updating Hugging Face repository: $REPO_ID"
@@ -62,13 +62,13 @@ hf upload "$REPO_ID" "$QUANTIZED_DIR" \
     --create-pr false
 
 # Upload README if it exists
-if [[ -f "$PROJECT_DIR/README.md" ]]; then
-    echo "Uploading project README..."
-    hf upload "$REPO_DIR" "$PROJECT_DIR/README.md" \
+if [[ -f "$PROJECT_DIR/MODEL_CARD.md" ]]; then
+    echo "Uploading model card..."
+    hf upload "$REPO_ID" "$PROJECT_DIR/MODEL_CARD.md" \
         --token "$HF_TOKEN" \
         --repo-type model \
         --path-in-repo "README.md" \
-        --commit-message "Add project documentation"
+        --commit-message "Add model card"
 fi
 
 # Upload license if it exists

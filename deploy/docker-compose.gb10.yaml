@@ -1,0 +1,22 @@
+services:
+  vllm-gb10:
+    image: vllm/vllm-openai:latest
+    runtime: nvidia
+    ports:
+      - "8000:8000"
+    volumes:
+      - ~/.cache/huggingface:/root/.cache/huggingface
+    ipc: host
+    command: >
+      vllm serve khakisketch/Qwen3.8-Flash-Next-GB10-NVFP4
+      --tp 1
+      --gpu-memory-utilization 0.8
+      --max-model-len 262144
+      --trust-remote-code
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]

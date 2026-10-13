@@ -1,0 +1,6 @@
+[synthetic] converting...
+  model-00001-of-00002.safetensors: 2 -> 5 tensors (1.7 MB)
+  model-00002-of-00002.safetensors: 1 -> 1 tensors (26.2 MB)
+[synthetic] PLE affine_g32 round-trip rel_l2=0.03043
+[synthetic] experts nvfp4_e2m1fn round-trip rel_l2=0.09411
+[synthetic] SYNTHETIC TEST PASSED

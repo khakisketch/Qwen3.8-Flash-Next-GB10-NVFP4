@@ -1,0 +1,8 @@
+{
+  "arch_ok": true,
+  "gb10_detected": true,
+  "ram_gb": 127.6,
+  "docker_gpu_backend": null
+}
+
+Full report written to: /tmp/opencode/portfolio-logs/gb10_doctor.json

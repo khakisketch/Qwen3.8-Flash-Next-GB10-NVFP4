@@ -1,0 +1,39 @@
+# NVFP4 + PLE-INT4 양자화 정책 (GB10 단일머신용, v1)
+# 원본: Qwen/Qwen3.8-Flash-Next (BF16, 약 360GB)
+# 목표: 128GB 통합메모리 상주 + NVMe 콜드티어
+
+model_id: Qwen/Qwen3.8-Flash-Next
+model_revision: de4b8e4d43b917e7706784d8bb445c9af86a3540
+target_hardware: NVIDIA GB10 (DGX Spark, sm_121, 128GB unified)
+
+policy:
+  moe_experts:
+    codec: nvfp4_e2m1fn
+    block_k: 16
+    scale_dtype: float16
+    # fused [E, K, N] 텐서, K/2로 nibble-pack
+    bytes_per_param: 0.5
+  ple_table:
+    codec: affine_uint4_g32
+    group: 32
+    scale_dtype: float16
+    zero_point_dtype: int16
+    bytes_per_param: 0.625
+  sensitive:
+    # attention / router / norm / lm_head / embed_tokens
+    dtype: bfloat16
+    bytes_per_param: 2.0
+
+converter:
+  streaming: true
+  shard_hold: 1
+  outputs:
+    - model-*.safetensors
+    - model.safetensors.index.json
+    - config.json
+    - ple_int4_manifest.json
+
+validation:
+  ple_rel_l2_max: 0.2
+  experts_rel_l2_max: 0.2
+  synthetic_test: python -m quantization.streaming_convert --synthetic-test

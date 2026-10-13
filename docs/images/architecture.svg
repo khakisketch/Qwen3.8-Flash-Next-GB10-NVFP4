@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="420" font-family="sans-serif">
+<rect width="1200" height="420" rx="16" fill="#0b1220"/>
+<text x="40" y="48" font-size="26" font-weight="700" fill="#ffffff">Qwen3.8-Flash-Next GB10 최적화 아키텍처</text>
+<text x="40" y="74" font-size="14" fill="#94a3b8">125B MoE + 51B PLE → NVFP4/INT4 → 단일 DGX Spark 128GB 상주</text>
+<g font-size="14">
+<rect x="40" y="110" width="340" height="150" rx="12" fill="#13233f" stroke="#2dd4bf" stroke-width="1.5"/>
+<text x="60" y="140" font-weight="700" fill="#5eead4">원본 BF16 (약 360GB)</text>
+<text x="60" y="166" fill="#e2e8f0">• 125B MoE 본체 (48층)</text>
+<text x="60" y="190" fill="#e2e8f0">• 51B PLE n-gram 테이블</text>
+<text x="60" y="214" fill="#e2e8f0">• 활성 6B / 토큰 (10+1 experts)</text>
+<text x="60" y="238" fill="#94a3b8">Qwen/Qwen3.8-Flash-Next</text>
+<rect x="430" y="110" width="340" height="150" rx="12" fill="#1a2b1f" stroke="#86efac" stroke-width="1.5"/>
+<text x="450" y="140" font-weight="700" fill="#86efac">양자화 (샤드 스트리밍)</text>
+<text x="450" y="166" fill="#e2e8f0">• MoE → NVFP4 E2M1 (0.5B/param)</text>
+<text x="450" y="190" fill="#e2e8f0">• PLE → INT4 affine g32</text>
+<text x="450" y="214" fill="#e2e8f0">• 민감층 BF16 유지</text>
+<text x="450" y="238" fill="#94a3b8">1샤드씩 처리, 전체 적재 없음</text>
+<rect x="820" y="110" width="340" height="150" rx="12" fill="#241c3a" stroke="#c4b5fd" stroke-width="1.5"/>
+<text x="840" y="140" font-weight="700" fill="#c4b5fd">GB10 서빙</text>
+<text x="840" y="166" fill="#e2e8f0">• 상주 + NVMe PLE 콜드티어</text>
+<text x="840" y="190" fill="#e2e8f0">• vLLM / SGLang TP=1</text>
+<text x="840" y="214" fill="#e2e8f0">• 262K 컨텍스트</text>
+<text x="840" y="238" fill="#94a3b8">sm_121 · CUDA 13 · 128GB 통합메모리</text>
+</g>
+<g stroke="#475569" stroke-width="2" marker-end="url(#a)">
+<defs><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="none" stroke="#94a3b8"/></marker></defs>
+<line x1="380" y1="185" x2="428" y2="185"/>
+<line x1="770" y1="185" x2="818" y2="185"/>
+</g>
+<g font-size="13">
+<rect x="40" y="290" width="220" height="90" rx="10" fill="#0f172a" stroke="#334155"/>
+<text x="56" y="316" fill="#fbbf24" font-weight="700">검증됨 (실측)</text>
+<text x="56" y="340" fill="#e2e8f0">PLE rel_l2 0.03</text>
+<text x="56" y="360" fill="#e2e8f0">Experts rel_l2 0.09</text>
+<rect x="280" y="290" width="220" height="90" rx="10" fill="#0f172a" stroke="#334155"/>
+<text x="296" y="316" fill="#7dd3fc" font-weight="700">GB10 실머신</text>
+<text x="296" y="340" fill="#e2e8f0">aarch64 · 127.6GB</text>
+<text x="296" y="360" fill="#e2e8f0">torch 2.13 · cap 12.1</text>
+<rect x="520" y="290" width="300" height="90" rx="10" fill="#0f172a" stroke="#334155"/>
+<text x="536" y="316" fill="#f9a8d4" font-weight="700">적용 예시</text>
+<text x="536" y="340" fill="#e2e8f0">현장 문서요약 · 관제 보조</text>
+<text x="536" y="360" fill="#e2e8f0">사내 지식 어시스턴트</text>
+<rect x="840" y="290" width="320" height="90" rx="10" fill="#0f172a" stroke="#334155"/>
+<text x="856" y="316" fill="#ffffff" font-weight="700">주식회사 케이에스아이</text>
+<text x="856" y="340" fill="#e2e8f0">043-288-4860</text>
+<text x="856" y="360" fill="#94a3b8">실증·배포 지원</text>
+</g>
+</svg>
