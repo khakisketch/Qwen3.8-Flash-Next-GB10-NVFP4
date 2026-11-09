@@ -12,7 +12,7 @@ from .trial import TrialRunner, _trial_argv
 DIAGNOSTIC_MIN_GIB = 18
 CONTAINER_HOOK_DIR = "/watch/diag"
 # Only profiles that have a measured host-memory envelope are accepted.
-ALLOWED_CONTEXTS = (32768, 65536)
+ALLOWED_CONTEXTS = (32768, 65536, 131072, 262144)
 ALLOWED_SEQUENCES = (1, 2)
 
 

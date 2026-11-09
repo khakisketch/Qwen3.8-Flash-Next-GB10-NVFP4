@@ -328,8 +328,23 @@ class DiagnosticPolicyTests(unittest.TestCase):
         with self.assertRaises(diagnostic.DiagnosticFailure):
             diagnostic.diagnostic_argv(
                 object(), Path("watchdog"), hooks, Path("heartbeat"),
-                context=131072, sequences=2,
+                context=524288, sequences=2,
             )
+
+    def test_diagnostic_argv_supports_native_262k_single_sequence(self):
+        base = ["docker", "run", "-d", IMAGE_PINNED, "watchdog", "entrypoint",
+                "vllm", "serve", MODEL_ID, "--host", "127.0.0.1",
+                "--max-model-len", "262144", "--max-num-seqs", "8"]
+        with tempfile.TemporaryDirectory() as temp:
+            hooks = Path(temp)
+            (hooks / "sitecustomize.py").write_text("# fake")
+            with patch("serve.trial.launch.build_docker_argv", return_value=base):
+                argv = diagnostic.diagnostic_argv(
+                    object(), Path("watchdog"), hooks, Path("heartbeat"),
+                    context=262144, sequences=1,
+                )
+        self.assertEqual(argv[argv.index("--max-model-len") + 1], "262144")
+        self.assertEqual(argv[argv.index("--max-num-seqs") + 1], "1")
 
     def test_diagnostic_guard_is_eighteen_gib_from_start(self):
         self.assertEqual(diagnostic.DIAGNOSTIC_MIN_GIB, 18)
