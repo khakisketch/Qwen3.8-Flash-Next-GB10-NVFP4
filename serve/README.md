@@ -50,8 +50,10 @@ NVIDIA 카드의 Spark 예제는 262,144/8시퀀스다. 이 장비에서는 18 G
   요청은 큐에서 기다린다. 2시퀀스로 늘리면 두 최대 요청이 524,288토큰을
   써서 KV 여유가 약 7,662토큰뿐이라 매우 타이트하다.
 - `max-num-batched-tokens=4,096`. MTP 4와 함께
-  `max_num_scheduled_tokens=4096` “suboptimal” 경고가 있다. 공식 기준값을
-  유지했고, 상향 튜닝은 별도 검증이 필요하다.
+  `max_num_scheduled_tokens=4096` “suboptimal” 경고가 있다. 8,192를
+  A/B 시험했지만 기동 990초, 디코드 46.77 tok/s, 기동 최저 19.77 GiB,
+  준비 후 22.77 GiB로 4,096보다 느리고 메모리 여유도 줄어 공식 4,096을
+  유지했다.
 - `gpu-memory-utilization=0.8`은 KV 산정에 사용되지 않는다. vLLM 로그도
   `kv_cache_memory_bytes` 때문에 memory profiling을 생략했다고 명시한다.
   실제 안전 경계는 호스트 18 GiB 가드다.
