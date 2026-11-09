@@ -20,7 +20,16 @@ export VLLM_API_KEY='Spark에서_복사한_값'
 ```
 
 OpenCode를 GUI로 실행한다면 환경변수가 상속되도록 셸에서 실행하거나,
-OS 사용자 환경변수로 등록한다.
+OS 사용자 환경변수로 등록한다. macOS GUI 앱은 터미널의 `export`를
+상속하지 않는 경우가 많으므로, GUI로 띄울 때는 다음처럼 등록한 뒤
+OpenCode를 완전히 종료하고 다시 실행한다.
+
+```sh
+launchctl setenv VLLM_API_KEY 'Spark에서_복사한_값'
+```
+
+기존 설정에 `apiKey: "local"` 같은 자리표시자가 남아 있으면 실제 키로
+바꾸거나 `"{env:VLLM_API_KEY}"`를 사용한다. `local`은 인증키가 아니다.
 
 ## 2. 설정 병합
 
@@ -104,7 +113,7 @@ report the diff and result. Do not edit files yourself.
 
 | 증상 | 확인 |
 |---|---|
-| `401 Unauthorized` | Mac의 `VLLM_API_KEY`와 Spark의 키가 같은지 |
+| `401 Unauthorized` | Mac의 `VLLM_API_KEY`와 Spark의 키가 같은지. GUI라면 `launchctl setenv` 후 OpenCode를 완전히 재시작했는지, 설정에 `apiKey: "local"` 자리표시자가 남아 있지 않은지 |
 | 연결 거부 | `./serve/status.sh`, `ss -ltn '( sport = :8000 )'` |
 | 모델 목록에 없음 | V2 `providers`/`package` 형식인지, baseURL이 `/v1`인지 |
 | 도구 호출을 안 함 | `capabilities.tools: true`, 서버의 `qwen3_xml` 파서 |
