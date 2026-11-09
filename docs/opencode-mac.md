@@ -53,7 +53,15 @@ OpenCode V2는 `providers`(복수)와 `package`를 사용한다. 예전
       "models": {
         "nvidia/Qwen3.8-Flash-Next-FP4-Local": {
           "limit": { "context": 65536, "output": 8192 },
-          "capabilities": { "tools": true, "input": ["text"], "output": ["text"] },
+          "capabilities": {
+            "tools": true,
+            "input": ["text"],
+            "output": ["text"],
+            "reasoning": {
+              "supported": true,
+              "effort": ["low", "medium", "xhigh"]
+            }
+          },
           "body": { "chat_template_kwargs": { "enable_thinking": false } }
         }
       }
