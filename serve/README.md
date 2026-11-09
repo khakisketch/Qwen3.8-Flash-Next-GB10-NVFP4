@@ -143,7 +143,9 @@ systemctl --user reset-failed qwen38-fp4.service
 thinking을 끄면 짧은 코딩 작업의 지연과 토큰 사용이 줄어든다. 이 예시
 파일 자체를 임시 프로젝트에 복사해 `opencode models`에서 공급자가
 표시되는 것과, `opencode run --agent general`로 `mathbox.py` 버그를
-수정하고 테스트 2개를 통과시키는 것도 확인했다. Mac 절차는
+수정하고 테스트 2개를 통과시키는 것도 확인했다. 256K/1 프로필에서도
+General 작업 1건이 통과했다. Mac에서는 `/v1/models` 조회가 200으로
+확인됐지만 Mac발 General 실행은 아직 없다. 절차는
 [opencode-mac.md](../docs/opencode-mac.md)에 있다.
 
 Mac에서는 키를 환경변수로 설정한 뒤 예시를 기존 설정에 병합한다.

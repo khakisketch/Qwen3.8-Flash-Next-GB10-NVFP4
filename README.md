@@ -64,9 +64,10 @@ Spark에서 Build → General 위임을 실제 실행해 확인했습니다. Gen
 `spark-qwen/nvidia/Qwen3.8-Flash-Next-FP4-Local`을 사용했고, 실패하던
 `add()`와 할인 계산을 수정한 뒤 테스트를 통과했습니다. 배포용 예시 파일
 그대로 `opencode run --agent general`을 실행해 `mathbox.py`를 수정하고
-테스트 2개를 통과시키는 것도 확인했습니다. **Mac 기기에서의 직접 접속과
-실행은 아직 검증하지 않았습니다.** 절차는
-[Mac OpenCode 연결](docs/opencode-mac.md)에 정리했습니다.
+테스트 2개를 통과시키는 것도 확인했습니다. 256K/1 프로필에서도 같은
+General 작업이 통과했습니다. **Mac에서는 `/v1/models` 조회가 200으로
+확인됐지만, Mac발 실제 General 실행은 아직 서버 로그에 없습니다.**
+절차는 [Mac OpenCode 연결](docs/opencode-mac.md)에 정리했습니다.
 
 ## 안전과 한계
 
