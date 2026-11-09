@@ -52,7 +52,7 @@ OpenCode V2는 `providers`(복수)와 `package`를 사용한다. 예전
       },
       "models": {
         "nvidia/Qwen3.8-Flash-Next-FP4-Local": {
-          "limit": { "context": 65536, "output": 8192 },
+          "limit": { "context": 262144, "output": 8192 },
           "capabilities": {
             "tools": true,
             "input": ["text"],
@@ -127,7 +127,7 @@ report the diff and result. Do not edit files yourself.
 | 도구 호출을 안 함 | `capabilities.tools: true`, 서버의 `qwen3_xml` 파서 |
 | `Unexpected reasoning effort high` | `#high` 변형을 제거한다. 이 모델의 지원 값은 `xhigh`(기본), `medium`, `low` |
 | 응답이 느림 | `body.chat_template_kwargs.enable_thinking=false` 확인 |
-| 긴 문맥 오류 | 모델 한도 65,536, 출력 8,192 이내인지 |
+| 긴 문맥 오류 | 모델 한도 262,144, 출력 8,192 이내인지 |
 
 ## 6. 보안
 

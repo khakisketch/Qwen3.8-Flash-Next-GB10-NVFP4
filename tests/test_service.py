@@ -10,11 +10,11 @@ ROOT = Path(__file__).parents[1]
 
 
 class ServiceConfigTests(unittest.TestCase):
-    def test_unit_uses_the_verified_64k_two_sequence_profile(self):
+    def test_unit_uses_the_verified_256k_two_sequence_profile(self):
         unit = (ROOT / "serve" / "systemd" / "qwen38-fp4.service.in").read_text()
-        self.assertIn("--context 65536", unit)
+        self.assertIn("--context 262144", unit)
         self.assertIn("--sequences 2", unit)
-        self.assertIn("--kv-cache-memory-bytes 9663676416", unit)
+        self.assertIn("--kv-cache-memory-bytes 10737418240", unit)
         self.assertIn("--listen-all", unit)
         self.assertIn("--reclaim-csf-cache", unit)
 
@@ -39,6 +39,7 @@ class ServiceConfigTests(unittest.TestCase):
         )
         self.assertEqual(provider["settings"]["baseURL"], "http://172.30.1.44:8000/v1")
         model = provider["models"]["nvidia/Qwen3.8-Flash-Next-FP4-Local"]
+        self.assertEqual(model["limit"]["context"], 262144)
         self.assertTrue(model["capabilities"]["tools"])
         self.assertEqual(
             model["capabilities"]["reasoning"]["effort"],
