@@ -23,6 +23,24 @@ NVIDIA 카드의 Spark 예제는 262,144/8시퀀스다. 이 장비에서는 64K/
 전체는 검증하지 않았다. `--gpu-memory-utilization 0.8`은 유지하지만
 `--kv-cache-memory-bytes`를 명시했으므로 KV 용량은 9 GiB 예산을 사용한다.
 
+## 용량과 제약 (2026-11-09)
+
+- `max_model_len=65,536`: 요청당 **입력+출력 합계** 한도다. OpenCode의
+  출력 상한 8,192를 최대로 쓰려면 입력은 약 57,344토큰 이하로 두는 것이
+  안전하다.
+- KV 9 GiB = **252,266 tokens**. vLLM은 65,536토큰 요청 기준 최대
+  **3.85배** 동시성을 계산했지만 `max-num-seqs=2`가 실제 상한이다.
+- `max-num-batched-tokens=4,096`. MTP 4와 함께
+  `max_num_scheduled_tokens=4096` “suboptimal” 경고가 있다. 공식 기준값을
+  유지했고, 상향 튜닝은 별도 검증이 필요하다.
+- `gpu-memory-utilization=0.8`은 KV 산정에 사용되지 않는다. vLLM 로그도
+  `kv_cache_memory_bytes` 때문에 memory profiling을 생략했다고 명시한다.
+  실제 안전 경계는 호스트 18 GiB 가드다.
+- 모델은 125B total / 6B active, 51B n-gram 테이블과 4B MTP를 포함한다.
+  체크포인트는 약 96 GiB·21 shard이며 PLE 테이블은 디스크에 있다.
+- GB10은 통합 메모리라 `nvidia-smi`의 memory total/used가 `N/A`로 나온다.
+  호스트 `MemAvailable`이 판단 기준이다.
+
 API 키는 `~/.config/qwen38/qwen38.env`에만 있다. Git, 문서, 로그에 넣지
 않는다. OpenCode V2 예시는 [opencode.example.json](opencode.example.json)에
 있으며 `{env:VLLM_API_KEY}`를 사용한다.
@@ -67,7 +85,7 @@ systemctl --user reset-failed qwen38-fp4.service
 | 64K/2seq 재기동 | 272초 |
 | 호스트 감독자 SIGKILL 후 복구 | 336초 |
 | 64K/2seq 기동 중 최저 | 24.89 GiB |
-| 64K/2seq 준비 후 | 26.5–27.6 GiB |
+| 64K/2seq 준비 후 | 25.9–27.6 GiB |
 | TTFT / 디코드 | 0.298초 / 48.38 tok/s 중앙값 (3회) |
 | 긴 문맥 | 9,944토큰 needle 정답 |
 | 동시 요청 | 2개 완료 |
@@ -127,7 +145,7 @@ opencode models | grep spark-qwen
   가드를 침범했다. `--reclaim-csf-cache`로 사용하지 않는 CUDA 캐시를
   반환하고, KV를 명시적 4 GiB로 제한해 통과했다.
 - 64K/2seq는 KV 9 GiB로 상향했고, 18 GiB 가드에서 기동 최저 24.89 GiB,
-  준비 후 약 26.5–27.6 GiB를 유지했다.
+  준비 후 약 25.9–27.6 GiB를 유지했다.
 
 ## 시험
 

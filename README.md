@@ -12,8 +12,9 @@ systemd 상시 서비스로 운영하는 프로젝트입니다. 모델·이미�
 - 모델 ID: `nvidia/Qwen3.8-Flash-Next-FP4-Local`
 - 인증: `Authorization: Bearer <VLLM_API_KEY>` 필수. 키는 저장소 밖
   `~/.config/qwen38/qwen38.env`(0600)에만 있다.
-- 실행 프로필: 64K 컨텍스트, 최대 2시퀀스, KV 9 GiB, MTP 4, FP8 KV,
-  PLE 디스크 오프로드, `gpu-memory-utilization 0.8`.
+- 실행 프로필: 64K 컨텍스트, 최대 2시퀀스, KV 9 GiB(252,266 tokens),
+  배치 4,096 tokens, MTP 4, FP8 KV, PLE 디스크 오프로드,
+  `gpu-memory-utilization 0.8`.
 - NVIDIA 카드의 예제는 262,144/8시퀀스이지만, 이 장비에서는 64K/2시퀀스가
   가드·재기동·실사용에서 안정적이어서 운영 프로필로 선택했습니다.
   262K/8시퀀스 전체는 검증하지 않았습니다.
@@ -37,7 +38,7 @@ journalctl --user -u qwen38-fp4.service -f
 | 첫 64K 기동 | 870초 | 새 컨텍스트의 그래프/커널 준비 포함 |
 | 같은 프로필 재기동 | 272초 | 캐시 재사용 |
 | 비정상 종료 복구 | 336초 | 호스트 감독자 SIGKILL 후 systemd 재시작 |
-| 준비 후 `MemAvailable` | 약 26.5–27.6 GiB | 64K/2seq, KV 9 GiB |
+| 준비 후 `MemAvailable` | 약 25.9–27.6 GiB | 64K/2seq, KV 9 GiB |
 | 기동 중 최저 `MemAvailable` | 약 24.89 GiB | 18 GiB 가드 통과 |
 | TTFT | 0.298초 중앙값 | 스트리밍 3회, thinking off |
 | 디코드 | 48.38 tok/s 중앙값 | 같은 3회, 169–256 출력 토큰 |
@@ -80,6 +81,11 @@ Spark에서 Build → General 위임을 실제 실행해 확인했습니다. Gen
   로그·health·가드의 간접 감지이며, 모든 OOM 경로를 보장하지 않습니다.
 - 64K 최대 문맥 전체를 한 요청으로 시험하지는 않았습니다. 검증한 긴 문맥은
   약 9,944토큰입니다.
+- 추론 강도는 `xhigh`(기본), `medium`, `low`만 지원하며 `high`는 400으로
+  거부됩니다. 일반 OpenCode 설정은 thinking을 끄므로 추론 토큰을 쓰지 않습니다.
+- `max-num-batched-tokens=4096`은 MTP 4와 함께 vLLM의 “suboptimal” 경고가
+  있으며, 공식 기준값을 유지한 상태입니다. 상향 튜닝은 아직 검증하지
+  않았습니다.
 - 재부팅 자동 시작은 `enable`과 linger로 설정했지만 실제 재부팅을 수행해
   확인하지는 않았습니다. 장시간(일 단위) 연속 운용도 아직 미검증입니다.
 
