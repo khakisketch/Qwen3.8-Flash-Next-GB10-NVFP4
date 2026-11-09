@@ -13,7 +13,7 @@ Environment=PYTHONUNBUFFERED=1
 Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 ExecStartPre=/usr/bin/docker version --format {{.Server.Version}}
 ExecStartPre=@PROJECT_DIR@/serve/systemd/cleanup-stale.sh
-ExecStart=/usr/bin/python3 -m serve.diagnostic --listen-all --reclaim-csf-cache --context 262144 --sequences 2 --kv-cache-memory-bytes 10737418240 --kernel-cache-dir @PROJECT_DIR@/.opencode/cache/qwen38-pinned-kernels-20261030
+ExecStart=/usr/bin/python3 -m serve.diagnostic --listen-all --reclaim-csf-cache --context 262144 --sequences 1 --kv-cache-memory-bytes 10737418240 --kernel-cache-dir @PROJECT_DIR@/.opencode/cache/qwen38-pinned-kernels-20261030
 ExecStopPost=@PROJECT_DIR@/serve/systemd/cleanup-stale.sh
 Restart=on-failure
 RestartSec=60

@@ -152,25 +152,21 @@ VLLM_CONTAINER_ENV = {
     "B12X_W4A16_A4_PREFILL": "1",
 }
 
-# Host-facing decisions. The USER explicitly approved: current digest
-# image (anonymous fetch), NVIDIA example seccomp+apparmor unconfined
-# (io_uring evidence above; PLE disk backend needs io_uring), host
-# IPC/network from the example. The API still binds localhost only.
+# Host-facing decisions. The official checkpoint/image/recipe is the
+# baseline. Deviations are limited to host safety and access control.
 DECISIONS_FROM_NVIDIA_EXAMPLE = (
     (
         "D1: vLLM --host 0.0.0.0",
-        "bind 127.0.0.1 only (host network scope: container loopback IS "
-        "host loopback, so the direct listener binds host localhost; "
-        "host proxies or forwards need separate review)",
-        "Restrict the direct listener on a shared machine; other host "
-        "forwarding is outside this check.",
+        "KEPT as the official example. The API requires a Bearer "
+        "VLLM_API_KEY and has no TLS.",
+        "Official binding plus an explicit access control; the key lives "
+        "outside Git and LAN/Tailscale exposure is documented.",
     ),
     (
         "D2: docker --network host",
-        "KEPT as user-approved scope (no -p port mapping; host networking "
-        "ignores -p); locality enforced by D1 instead",
-        "User decision; with --network host the container loopback is the "
-        "host loopback, so D1 is the mechanism that keeps the API local.",
+        "KEPT as the official example (no -p port mapping; host "
+        "networking ignores -p)",
+        "User-approved official scope; the Bearer key is the access gate.",
     ),
     (
         "D3: docker --ipc host",
@@ -210,6 +206,34 @@ DECISIONS_FROM_NVIDIA_EXAMPLE = (
         "Intended to keep monitoring if the host supervisor dies. "
         "Simultaneous failures or a hung watchdog are not ruled out, and "
         "application/CUDA OOM coverage is incomplete.",
+    ),
+    (
+        "D8: --max-num-seqs 8",
+        "1 sequence",
+        "The 18 GiB host guard cannot support the official 8-sequence KV "
+        "envelope at 262K; the second request queues instead of risking "
+        "memory pressure.",
+    ),
+    (
+        "D9: automatic KV sizing via gpu-memory-utilization 0.8",
+        "explicit --kv-cache-memory-bytes 10 GiB (531,950 tokens at "
+        "262,144 context)",
+        "The explicit budget keeps the measured host envelope; vLLM skips "
+        "memory profiling when this flag is set, so the host guard is the "
+        "real safety boundary.",
+    ),
+    (
+        "D10: no CSF cache reclaim",
+        "opt-in --reclaim-csf-cache at the NVFP4 CSF post-load boundary",
+        "Prevents the CSF post-load CUDA cache peak from crossing the "
+        "18 GiB guard; used only at the documented boundary.",
+    ),
+    (
+        "D11: interactive manual launch",
+        "systemd --user service with startup/stop/restart, heartbeat, "
+        "stale-container cleanup and bounded restart",
+        "Replaces the tmux supervisor whose heartbeat loss stopped the "
+        "earlier trials; no automatic infinite restart.",
     ),
 )
 
