@@ -1,0 +1,42 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "providers": {
+    "spark-qwen": {
+      "name": "DGX Spark Qwen",
+      "package": "@opencode/ai/providers/openai-compatible",
+      "settings": {
+        "baseURL": "http://172.30.1.44:8000/v1",
+        "apiKey": "{env:VLLM_API_KEY}"
+      },
+      "models": {
+        "nvidia/Qwen3.8-Flash-Next-FP4-Local": {
+          "name": "Qwen3.8 Flash Next FP4 Local",
+          "limit": {
+            "context": 65536,
+            "output": 8192
+          },
+          "capabilities": {
+            "tools": true,
+            "input": ["text"],
+            "output": ["text"]
+          },
+          "body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            }
+          }
+        }
+      }
+    }
+  },
+  "agents": {
+    "general": {
+      "mode": "subagent",
+      "model": "spark-qwen/nvidia/Qwen3.8-Flash-Next-FP4-Local",
+      "permissions": [
+        { "action": "edit", "resource": "*", "effect": "allow" },
+        { "action": "shell", "resource": "*", "effect": "allow" }
+      ]
+    }
+  }
+}

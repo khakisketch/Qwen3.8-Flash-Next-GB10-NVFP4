@@ -26,6 +26,13 @@ hf-repo-id/
 *.token
 HF_TOKEN
 
+# Local runtime evidence and generated caches (not source)
+.opencode/diagnostics/
+.opencode/cache/
+.opencode/verification/
+.opencode/working-state.md
+.opencode/*.log
+
 # Editor / OS
 .DS_Store
 *.swp

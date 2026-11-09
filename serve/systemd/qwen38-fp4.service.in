@@ -1,0 +1,29 @@
+[Unit]
+Description=Qwen3.8 Flash Next FP4-Local on DGX Spark
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=900
+StartLimitBurst=5
+
+[Service]
+Type=simple
+WorkingDirectory=@PROJECT_DIR@
+EnvironmentFile=%h/.config/qwen38/qwen38.env
+Environment=PYTHONUNBUFFERED=1
+Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ExecStartPre=/usr/bin/docker version --format {{.Server.Version}}
+ExecStartPre=@PROJECT_DIR@/serve/systemd/cleanup-stale.sh
+ExecStart=/usr/bin/python3 -m serve.diagnostic --listen-all --reclaim-csf-cache --context 65536 --sequences 2 --kv-cache-memory-bytes 9663676416 --kernel-cache-dir @PROJECT_DIR@/.opencode/cache/qwen38-pinned-kernels-20261030
+ExecStopPost=@PROJECT_DIR@/serve/systemd/cleanup-stale.sh
+Restart=on-failure
+RestartSec=60
+SuccessExitStatus=130
+KillSignal=SIGINT
+TimeoutStopSec=180
+UMask=0077
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=qwen38-fp4
+
+[Install]
+WantedBy=default.target
