@@ -18,7 +18,11 @@
           "capabilities": {
             "tools": true,
             "input": ["text"],
-            "output": ["text"]
+            "output": ["text"],
+            "reasoning": {
+              "supported": true,
+              "effort": ["low", "medium", "xhigh"]
+            }
           },
           "body": {
             "chat_template_kwargs": {

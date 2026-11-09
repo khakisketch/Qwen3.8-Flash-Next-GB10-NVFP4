@@ -41,6 +41,10 @@ class ServiceConfigTests(unittest.TestCase):
         model = provider["models"]["nvidia/Qwen3.8-Flash-Next-FP4-Local"]
         self.assertTrue(model["capabilities"]["tools"])
         self.assertEqual(
+            model["capabilities"]["reasoning"]["effort"],
+            ["low", "medium", "xhigh"],
+        )
+        self.assertEqual(
             example["agents"]["general"]["model"],
             "spark-qwen/nvidia/Qwen3.8-Flash-Next-FP4-Local",
         )

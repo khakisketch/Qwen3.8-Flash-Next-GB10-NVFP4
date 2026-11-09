@@ -117,6 +117,7 @@ report the diff and result. Do not edit files yourself.
 | 연결 거부 | `./serve/status.sh`, `ss -ltn '( sport = :8000 )'` |
 | 모델 목록에 없음 | V2 `providers`/`package` 형식인지, baseURL이 `/v1`인지 |
 | 도구 호출을 안 함 | `capabilities.tools: true`, 서버의 `qwen3_xml` 파서 |
+| `Unexpected reasoning effort high` | `#high` 변형을 제거한다. 이 모델의 지원 값은 `xhigh`(기본), `medium`, `low` |
 | 응답이 느림 | `body.chat_template_kwargs.enable_thinking=false` 확인 |
 | 긴 문맥 오류 | 모델 한도 65,536, 출력 8,192 이내인지 |
 
